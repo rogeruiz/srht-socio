@@ -1,0 +1,35 @@
+[project]
+name = "gesock"
+dynamic = ["version", "readme", "dependencies"]
+authors = [
+  { name = "Roger Steve Ruiz", email = "hi@rog.gr" },
+]
+description = "A CLI to generate text on an image for social media sharing."
+requires-python = ">=3.11"
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://git.sr.ht/~rogeruiz/gen-social"
+
+[tool.flit.sdist]
+exclude = ["docs"]
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+# [tool.setuptools.packages.find]
+# where = ["."]
+# include = ["gen-social*"]
+
+[tool.setuptools.dynamic]
+version = { attr = "gesock.__version__" }
+readme = { file = [ "README.md" ] }
+
+[project.scripts]
+gesock = "gesock.cli:main"

@@ -4,16 +4,6 @@ from wand.drawing import Drawing
 from wand.image import Image
 
 
-def draw_roi(contxt, roi_width, roi_height):
-    """Let's draw a blue box so we can identify what
-    our region of interest is."""
-    ctx.push()
-    ctx.stroke_color = Color('BLUE')
-    ctx.fill_color = Color('TRANSPARENT')
-    ctx.rectangle(left=75, top=255, width=roi_width, height=roi_height)
-    ctx.pop()
-
-
 def word_wrap(image, ctx, text, roi_width, roi_height):
     """Break long text to multiple lines, and reduce point size
     until all text fits within a bounding box."""
@@ -35,7 +25,7 @@ def word_wrap(image, ctx, text, roi_width, roi_height):
             columns = len(mutable_message)
             while columns > 0:
                 columns -= 1
-                mutable_message = '\n'.join(wrap(mutable_message, columns))
+                mutable_message = "\n".join(wrap(mutable_message, columns))
                 wrapped_width, _ = eval_metrics(mutable_message)
                 if wrapped_width <= roi_width:
                     break
@@ -49,23 +39,65 @@ def word_wrap(image, ctx, text, roi_width, roi_height):
     return mutable_message
 
 
-message = """This is some really long sentence with the
- word "Mississippi" in it."""
+# TODO: Bring in these variables as `--flags` from the command line. These will
+# be `--msg`, `--time`, `--author`, `--date`, and `--url`. This means that I
+# will need some string templates for things like the `byline` variable.
+message = """Using Nix with Exercism"""
+byline = """Reading time: 9 minutes
+By: Roger Steve Ruiz"""
+dateLine = "01 Feb 2023"
+urlLine = "https://write.rog.gr/writing/using-nix-with-exercism"
 
-ROI_SIDE = 175
+# TODO: Set x, y and px, py as an object to make it easier to understand and
+# get rid of magic numbers
 
-with Image(filename='logo:') as img:
+xTitle = 850  # 80
+yTitle = 300  # 200
+
+xInfo = 700  # 80
+yInfo = 80  # 400
+
+xDate = 300  # 80
+yDate = 50  # 560
+
+xUrl = 1120  # 80
+yUrl = 50  # 80
+
+# TODO: Support using `latte` or `mocha` as the input image.
+with Image(filename="social-media-template-latte.png") as img:
     with Drawing() as ctx:
-        draw_roi(ctx, ROI_SIDE, ROI_SIDE)
-        # Set the font style
-        ctx.fill_color = Color('RED')
-        ctx.font_family = 'Times New Roman'
-        ctx.font_size = 32
-        mutable_message = word_wrap(img,
-                                    ctx,
-                                    message,
-                                    ROI_SIDE,
-                                    ROI_SIDE)
-        ctx.text(75, 275, mutable_message)
+        ctx.fill_color = Color("#1e66f5")
+        ctx.font_family = "FantasqueSansM Nerd Font"
+        ctx.text_interline_spacing = 0
+        ctx.font_size = 26
+        mutable_byline = word_wrap(img, ctx, urlLine, xUrl, yUrl)
+        ctx.text(80, 110, mutable_byline)
         ctx.draw(img)
-        img.save(filename='draw-word-wrap.png')
+    with Drawing() as ctx:
+        ctx.fill_color = Color("#8839ef")
+        ctx.font_family = "Playfair Display"
+        ctx.font_style = "normal"
+        ctx.font_weight = 700
+        ctx.text_interline_spacing = -25
+        ctx.font_size = 80
+        mutable_message = word_wrap(img, ctx, message, xTitle, yTitle)
+        ctx.text(80, 250, mutable_message)
+        ctx.draw(img)
+    with Drawing() as ctx:
+        ctx.fill_color = Color("#8c8fa1")
+        ctx.font_family = "Quattrocento"
+        ctx.text_interline_spacing = 0
+        ctx.font_size = 30
+        mutable_byline = word_wrap(img, ctx, byline, xInfo, yInfo)
+        ctx.text(80, 400, mutable_byline)
+        ctx.draw(img)
+    with Drawing() as ctx:
+        ctx.fill_color = Color("#dc8a78")
+        ctx.font_family = "Quattrocento"
+        ctx.font_weight = 700
+        ctx.font_size = 30
+        mutable_byline = word_wrap(img, ctx, dateLine, xDate, yDate)
+        ctx.text(80, 540, mutable_byline)
+        ctx.draw(img)
+
+    img.save(filename="social-media-template-latte-done.png")

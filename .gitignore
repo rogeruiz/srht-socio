@@ -1,1 +1,6 @@
 .venv/
+.direnv/
+__pycache__/
+dist/
+MANIFEST.in
+*.egg-info/

@@ -10,8 +10,9 @@ pkgs.mkShell /* rec */ {
   buildInputs = [
     pythonPackages.python
     pythonPackages.venvShellHook
-    pythonPackages.click
-    pythonPackages.wand
+    # pythonPackages.click
+    # pythonPackages.wand
+    # pythonPackages.pydantic
     pythonPackages.build
     pythonPackages.setuptools
 
@@ -25,7 +26,7 @@ pkgs.mkShell /* rec */ {
       (google-fonts.override {
         fonts = [
           "Quattrocento"
-          "Playfair Display"
+          "Abril Fatface"
         ];
       })
       (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
@@ -40,5 +41,6 @@ pkgs.mkShell /* rec */ {
   postShellHook = ''
     # allow pip to install wheels
     unset SOURCE_DATE_EPOCH
+    export MAGICK_HOME="${pkgs.imagemagick}"
   '';
 }

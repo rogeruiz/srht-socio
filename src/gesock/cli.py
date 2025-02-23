@@ -1,8 +1,5 @@
 import click
-import tomllib
-
 from wand.image import Image
-
 from gesock import lib
 
 
@@ -63,4 +60,4 @@ def main(title, url, author, reading_time, date, input_image, output_dir):
         lib.draw_on_image(img, author)
         lib.draw_on_image(img, reading_time)
         lib.draw_on_image(img, date)
-        img.save(filename=f'{output_dir}/{slug}.png')
+        img.save(filename=f'{output_dir}/social-{slug}.png')

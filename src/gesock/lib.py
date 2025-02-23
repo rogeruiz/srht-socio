@@ -52,6 +52,8 @@ def generate_slug(text):
 
 
 def draw_on_image(img, data):
+    """Takes an option from the CLI and reads the TOML configuration while
+    using ImageMagick to overlay the data onto the image"""
 
     if data is None:
         return

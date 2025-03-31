@@ -1,10 +1,10 @@
 [project]
-name = "gesock"
+name = "socio"
 dynamic = ["version", "readme", "dependencies"]
 authors = [
   { name = "Roger Steve Ruiz", email = "hi@rog.gr" },
 ]
-description = "A CLI to generate text on an image for social media sharing."
+description = "A CLI to generate text on an image for social media sharing using ImageMagick."
 requires-python = ">=3.11"
 
 classifiers = [
@@ -14,7 +14,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://git.sr.ht/~rogeruiz/gen-social"
+Homepage = "https://git.sr.ht/~rogeruiz/socio"
 
 [tool.flit.sdist]
 exclude = ["docs"]
@@ -23,13 +23,9 @@ exclude = ["docs"]
 requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
-# [tool.setuptools.packages.find]
-# where = ["."]
-# include = ["gen-social*"]
-
 [tool.setuptools.dynamic]
-version = { attr = "gesock.__version__" }
+version = { attr = "socio.__version__" }
 readme = { file = [ "README.md" ] }
 
 [project.scripts]
-gesock = "gesock.cli:main"
+socio = "socio.cli:main"
